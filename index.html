@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trygonometria — laboratorium</title>
+<style>
+:root{--bg:#0b1020;--panel:#141c32;--panel2:#1b2743;--ink:#eef4ff;--muted:#a8b7d5;--cyan:#59e1e8;--pink:#ff78b7;--yellow:#ffd166;--green:#80ed99;--line:#334361}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1d2b51 0,transparent 45%),var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:26px clamp(16px,4vw,48px) 18px;max-width:1400px;margin:auto}h1{margin:0;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.04em}h1 span{color:var(--cyan)}header p{color:var(--muted);margin:.45rem 0 0}
+main{max-width:1400px;margin:auto;padding:0 clamp(12px,3vw,36px) 40px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px}
+.panel{background:linear-gradient(145deg,rgba(25,36,63,.97),rgba(16,24,44,.98));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 12px 34px #0002;min-width:0}.panel h2{font-size:1.1rem;margin:0 0 12px}.stage{position:relative;background:#0a1225;border:1px solid #263657;border-radius:15px;overflow:hidden}
+svg{display:block;width:100%;height:auto;touch-action:pan-y}.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px}.control{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;flex:1;min-width:145px}.control label{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.88rem;margin-bottom:6px}input[type=range]{width:100%;accent-color:var(--cyan)}button{border:0;border-radius:11px;padding:10px 14px;background:var(--cyan);color:#061522;font-weight:750;cursor:pointer}button.secondary{background:#263858;color:var(--ink);border:1px solid #405579}button:hover{filter:brightness(1.08)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.stat{padding:12px;border-radius:12px;background:#0d172c;border:1px solid #293a5a}.stat small{display:block;color:var(--muted)}.stat strong{font-size:1.25rem;font-variant-numeric:tabular-nums}.cyan{color:var(--cyan)}.pink{color:var(--pink)}.yellow{color:var(--yellow)}.green{color:var(--green)}
+.right{display:grid;gap:18px;align-content:start}.formula{font-size:1.1rem;background:#0c1529;padding:12px;border-radius:12px;margin:8px 0;border:1px solid #293a5a}.formula b{color:var(--cyan)}.hint{color:var(--muted);font-size:.93rem}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#223251;border:1px solid #3b5074;padding:6px 10px;border-radius:999px;font-size:.86rem}.quiz-question{font-size:1.1rem;margin:5px 0 14px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.answers button{background:#233351;color:var(--ink);border:1px solid #405579}.answers button.correct{background:#174c43;border-color:var(--green)}.answers button.wrong{background:#5b263f;border-color:var(--pink)}#feedback{min-height:28px;margin-top:10px;color:var(--muted)}.progress{height:7px;background:#263653;border-radius:20px;overflow:hidden;margin:10px 0}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));transition:width .3s}.legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:8px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+footer{text-align:center;color:#7182a3;font-size:.85rem;padding:0 12px 28px}
+@media(max-width:850px){main{grid-template-columns:1fr}.right{grid-template-columns:1fr 1fr}.right .panel:last-child{grid-column:1/-1}}
+@media(max-width:560px){.right{grid-template-columns:1fr}.right .panel:last-child{grid-column:auto}.stats{grid-template-columns:1fr 1fr 1fr}.stat{padding:9px 7px}.stat strong{font-size:1.05rem}.panel{padding:13px}}
+</style>
+</head>
+<body>
+<header><h1>TRYGO<span>LAB</span> ✦</h1><p>Interaktywne laboratorium funkcji trygonometrycznych — ruszaj kątem, obserwuj wykres i odkrywaj zależności.</p></header>
+<main>
+<section class="panel">
+ <h2>01 / Okrąg jednostkowy</h2>
+ <div class="stage">
+ <svg id="circle" viewBox="0 0 620 440" role="img" aria-label="Interaktywny okrąg jednostkowy">
+  <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#22304c" stroke-width="1"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect width="620" height="440" fill="url(#grid)"/>
+  <g id="axes" stroke="#7385a6" stroke-width="1.5"><line x1="70" y1="220" x2="550" y2="220"/><line x1="310" y1="410" x2="310" y2="30"/><path d="M540 214 l10 6 -10 6 M304 40 l6 -10 6 10" fill="none"/></g>
+  <circle cx="310" cy="220" r="150" fill="#101d35" stroke="#7184a8" stroke-width="2"/>
+  <circle cx="310" cy="220" r="150" fill="none" stroke="#314564" stroke-dasharray="4 7"/>
+  <g fill="#a8b7d5" font-size="12"><text x="552" y="211">x</text><text x="321" y="36">y</text><text x="463" y="239">1</text><text x="290" y="60">1</text><text x="290" y="385">−1</text><text x="152" y="239">−1</text><text x="321" y="239">0</text></g>
+  <path id="angleArc" d="" fill="none" stroke="#ffd166" stroke-width="3"/>
+  <path id="sinLine" d="" stroke="#ff78b7" stroke-width="4" stroke-linecap="round"/>
+  <path id="cosLine" d="" stroke="#59e1e8" stroke-width="4" stroke-linecap="round"/>
+  <path id="radius" d="" stroke="#eef4ff" stroke-width="2.5"/>
+  <circle id="point" cx="460" cy="220" r="7" fill="#fff" stroke="#59e1e8" stroke-width="3" filter="url(#glow)"/>
+  <line id="projX" x1="0" y1="0" x2="0" y2="0" stroke="#59e1e8" stroke-width="2" stroke-dasharray="5 5"/>
+  <line id="projY" x1="0" y1="0" x2="0" y2="0" stroke="#ff78b7" stroke-width="2" stroke-dasharray="5 5"/>
+  <text id="cosLabel" x="0" y="0" fill="#59e1e8" font-size="14" font-weight="700">cos</text><text id="sinLabel" x="0" y="0" fill="#ff78b7" font-size="14" font-weight="700">sin</text>
+  <text x="18" y="24" fill="#7185aa" font-size="12">PROMIEŃ r = 1</text>
+ </svg>
+ </div>
+ <div class="controls">
+  <div class="control"><label for="angle">Kąt α <strong id="angleVal">45°</strong></label><input id="angle" type="range" min="0" max="360" value="45" step="1"></div>
+  <button id="play">▶ Animuj</button><button id="reset" class="secondary">↺ Reset</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><small class="cyan">cos α = x</small><strong id="cosVal">0,707</strong></div>
+  <div class="stat"><small class="pink">sin α = y</small><strong id="sinVal">0,707</strong></div>
+  <div class="stat"><small class="yellow">tg α = sin/cos</small><strong id="tanVal">1,000</strong></div>
+ </div>
+ <div class="legend"><span><i class="dot" style="background:var(--cyan)"></i>cosinus — poziomo</span><span><i class="dot" style="background:var(--pink)"></i>sinus — pionowo</span><span><i class="dot" style="background:var(--yellow)"></i>kąt</span></div>
+</section>
+<div class="right">
+ <section class="panel">
+  <h2>02 / Wykresy na żywo</h2>
+  <svg id="graphs" viewBox="0 0 500 290" role="img" aria-label="Wykresy sinusa i cosinusa">
+   <rect width="500" height="290" rx="12" fill="#0a1225"/>
+   <g stroke="#263653" stroke-width="1"><path d="M35 35H475 M35 90H475 M35 145H475 M35 200H475 M35 255H475"/><path d="M35 25V260 M145 25V260 M255 25V260 M365 25V260 M475 25V260"/></g>
+   <path d="M35 145H475" stroke="#7185a6" stroke-width="1.5"/>
+   <path id="sinGraph" fill="none" stroke="#ff78b7" stroke-width="3"/>
+   <path id="cosGraph" fill="none" stroke="#59e1e8" stroke-width="3"/>
+   <line id="graphCursor" x1="0" y1="25" x2="0" y2="260" stroke="#ffd166" stroke-dasharray="4 5" stroke-width="2"/>
+   <circle id="sinDot" r="5" fill="#ff78b7"/><circle id="cosDot" r="5" fill="#59e1e8"/>
+   <g fill="#a8b7d5" font-size="11"><text x="30" y="278">0°</text><text x="135" y="278">90°</text><text x="244" y="278">180°</text><text x="353" y="278">270°</text><text x="455" y="278">360°</text><text x="7" y="39">1</text><text x="8" y="149">0</text><text x="3" y="257">−1</text></g>
+  </svg>
+  <p class="hint">Żółta linia wskazuje aktualny kąt. Różowy wykres to sin, niebieski — cos.</p>
+ </section>
+ <section class="panel">
+  <h2>03 / Zapamiętaj</h2>
+  <div class="formula"><b>sin α</b> = przeciwległa / przeciwprostokątna</div>
+  <div class="formula"><b>cos α</b> = przyległa / przeciwprostokątna</div>
+  <div class="formula"><b>tg α</b> = przeciwległa / przyległa = sin α / cos α</div>
+  <p class="hint">Na okręgu jednostkowym promień ma długość 1, dlatego współrzędne punktu to (cos α, sin α).</p>
+  <div class="chips"><span class="chip">sin² α + cos² α = 1</span><span class="chip">tg α nie istnieje, gdy cos α = 0</span></div>
+ </section>
+ <section class="panel">
+  <h2>04 / Szybki quiz</h2>
+  <div class="progress"><div id="progress"></div></div>
+  <p class="hint">Punkty: <strong id="score">0</strong> · Pytanie <strong id="qnum">1</strong>/5</p>
+  <p class="quiz-question" id="question">Ile wynosi sin 30°?</p>
+  <div class="answers" id="answers"></div><div id="feedback" aria-live="polite">Wybierz odpowiedź.</div>
+  <button id="next" class="secondary" style="margin-top:8px" hidden>Następne pytanie →</button>
+ </section>
+</div>
+</main>
+<footer>TRYGOLAB • Eksperymentuj: zmieniaj kąt i obserwuj, jak zmieniają się wartości.</footer>
+<script>
+const $=id=>document.getElementById(id), angle=$('angle');let playing=false,raf=0,last=0,score=0,qIndex=0,answered=false;
+const fmt=n=>Math.abs(n)<.0005?'0,000':n.toFixed(3).replace('.',',');
+function update(){
+ const deg=+angle.value,rad=deg*Math.PI/180,c=Math.cos(rad),s=Math.sin(rad),cx=310,cy=220,R=150,x=cx+R*c,y=cy-R*s;
+ $('angleVal').textContent=deg+'°';$('cosVal').textContent=fmt(c);$('sinVal').textContent=fmt(s);$('tanVal').textContent=Math.abs(c)<.0005?'nie istnieje':fmt(s/c);
+ $('point').setAttribute('cx',x);$('point').setAttribute('cy',y);
+ $('radius').setAttribute('d',`M${cx} ${cy} L${x} ${y}`);
+ $('projX').setAttribute('x1',x);$('projX').setAttribute('y1',y);$('projX').setAttribute('x2',x);$('projX').setAttribute('y2',cy);
+ $('projY').setAttribute('x1',x);$('projY').setAttribute('y1',y);$('projY').setAttribute('x2',cx);$('projY').setAttribute('y2',y);
+ $('cosLine').setAttribute('d',`M${cx} ${cy} L${x} ${cy}`);$('sinLine').setAttribute('d',`M${x} ${cy} L${x} ${y}`);
+ const a=rad,ex=cx+42*Math.cos(a),ey=cy-42*Math.sin(a);$('angleArc').setAttribute('d',`M${cx+42} ${cy} A42 42 0 ${deg>180?1:0} 0 ${ex} ${ey}`);
+ $('cosLabel').setAttribute('x',(cx+x)/2);$('cosLabel').setAttribute('y',cy+20);$('sinLabel').setAttribute('x',x+8);$('sinLabel').setAttribute('y',(cy+y)/2);
+ let sp='',cp='';for(let i=0;i<=360;i+=2){let gx=35+i*440/360,gy=145-Math.sin(i*Math.PI/180)*110,cy2=145-Math.cos(i*Math.PI/180)*110;sp+=(i?' L':'M')+gx.toFixed(2)+' '+gy.toFixed(2);cp+=(i?' L':'M')+gx.toFixed(2)+' '+cy2.toFixed(2)}
+ $('sinGraph').setAttribute('d',sp);$('cosGraph').setAttribute('d',cp);
+ const gx=35+deg*440/360,gy=145-s*110,gyc=145-c*110;$('graphCursor').setAttribute('x1',gx);$('graphCursor').setAttribute('x2',gx);$('sinDot').setAttribute('cx',gx);$('sinDot').setAttribute('cy',gy);$('cosDot').setAttribute('cx',gx);$('cosDot').setAttribute('cy',gyc);
+}
+angle.addEventListener('input',update);
+function animate(t){if(!playing)return;if(t-last>28){angle.value=(+angle.value+1)%361;update();last=t}raf=requestAnimationFrame(animate)}
+$('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'Ⅱ Pauza':'▶ Animuj';if(playing)raf=requestAnimationFrame(animate);else cancelAnimationFrame(raf)};
+$('reset').onclick=()=>{playing=false;cancelAnimationFrame(raf);$('play').textContent='▶ Animuj';angle.value=45;update()};
+const questions=[
+ {q:'Ile wynosi sin 30°?',a:['0,5','√2/2','1','0'],correct:0,why:'sin 30° = 1/2 = 0,5.'},
+ {q:'Ile wynosi cos 0°?',a:['0','−1','1','0,5'],correct:2,why:'Punkt dla 0° to (1, 0), więc cos 0° = 1.'},
+ {q:'Która tożsamość jest prawdziwa?',a:['sin α + cos α = 1','sin² α + cos² α = 1','sin α = cos α zawsze','tg α = cos/sin'],correct:1,why:'To podstawowa jedynka trygonometryczna.'},
+ {q:'Ile wynosi tg 45°?',a:['0','√3','1','nie istnieje'],correct:2,why:'tg 45° = sin 45° / cos 45° = 1.'},
+ {q:'Kiedy tangens nie istnieje?',a:['gdy sin α = 0','gdy cos α = 0','gdy α = 0°','gdy cos α = 1'],correct:1,why:'Tangens to sin α / cos α, więc nie można dzielić przez zero.'}
+];
+function renderQ(){
+ answered=false;$('feedback').textContent='Wybierz odpowiedź.';$('next').hidden=true;
+ if(qIndex>=questions.length){$('question').textContent=`Koniec quizu! Wynik: ${score}/${questions.length}.`; $('answers').innerHTML='';$('feedback').textContent=score>=4?'Świetnie! Masz to opanowane.':'Dobra robota — poeksperymentuj z kątem i spróbuj ponownie.';$('next').hidden=false;$('next').textContent='↻ Zagraj ponownie';return}
+ const q=questions[qIndex];$('question').textContent=q.q;$('qnum').textContent=qIndex+1;$('progress').style.width=(qIndex/questions.length*100)+'%';
+ $('answers').innerHTML='';q.a.forEach((a,i)=>{const b=document.createElement('button');b.textContent=a;b.onclick=()=>choose(i,b);$('answers').appendChild(b)});
+}
+function choose(i,b){if(answered)return;answered=true;const q=questions[qIndex];[...$('answers').children].forEach((el,j)=>{el.disabled=true;if(j===q.correct)el.classList.add('correct')});if(i===q.correct){score++;$('score').textContent=score;$('feedback').textContent='✓ Dobrze! '+q.why}else{$('feedback').textContent='Jeszcze nie. '+q.why;b.classList.add('wrong')}$('progress').style.width=((qIndex+1)/questions.length*100)+'%';$('next').hidden=false;$('next').textContent=qIndex===questions.length-1?'Zobacz wynik →':'Następne pytanie →'}
+$('next').onclick=()=>{if(qIndex>=questions.length){qIndex=0;score=0;$('score').textContent=score;$('next').textContent='Następne pytanie →'}else qIndex++;renderQ()};
+update();renderQ();
+</script>
+</body>
+</html>
